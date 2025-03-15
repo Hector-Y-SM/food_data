@@ -1,81 +1,86 @@
 import type { Data } from './interfaces/data';
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, get } from "firebase/database";
+import { getDatabase, ref, get, child } from "firebase/database";
 import { firebaseConfig } from './firebase_config.ts';
-
-
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-const dbRef = ref(db, '/');
+const dbRef = ref(db);
 
 /**
- * función que realiza un fetch a un archivo json local y devuelve un arreglo de todos los alimentos (key : value)
+ * Function that queries the Firebase database.
  * 
- * @returns un arreglo de objetos de tipo `Data` que contiene el key y value de todos los alimentos disponibles en la interfaz
+ * @returns A promise that resolves to an array of `Data` objects 
+ * containing information about the available food items, or null if no data is found.
  */
-async function name() {
-    const snapshot = await get(dbRef);
-    if (snapshot.exists()) {
-        const data = <Data[]>snapshot.val();
-        data.map( x => ( {Alimento: x.Alimento} ));
-        console.log(data);
-        return data;
-    } else {
-        console.log("No data available at this location.");
+export async function name(): Promise<Data[] | null>  {
+    try {
+        const snapshot = await get(child(dbRef,'/'));
+        if (snapshot.exists()) {
+            const data = <Data[]>snapshot.val();
+            const obj = data.map( x => ({Alimento: x.Alimento}));
+            return obj as Data[];
+        } else {
+            console.log("No data available at this location.");
+            return null;
+        }        
+    } catch(err) {
+        console.log(err);
         return null;
     }
 };
 
 
 /**
- * función que recibe un parámetro de texto, realiza un fetch a un archivo json local y
- * filtra los alimentos que coinciden con la cadena (categoria) proporcionada y devuelve 
- * un arreglo con los alimentos que tengan coincidencia
+ * Function that receives a text parameter, queries the Firebase database,
+ * filters the food items that match the provided string (category), 
  * 
- * @param input cadena de texto que se utiliza para filtrar los alimentos en el archivo json,
- *              el filtro se realiza comprobando si el nombre de la categoria coincide con el texto proporcionado
+ * @param input Text string used to filter the food items in the database.
+ *              The filtering is done by checking if the category name matches the provided text.
  * 
- * @returns un arreglo de objetos de tipo `Data` que contienen alimentos que su categoria coincide con el parámetro `input`.
+ * @returns An array of `Data` objects containing food items whose category matches the `input` parameter.
  */
-async function filtCategory(input: string) {
-    const snapshot = await get(dbRef);
-    if (snapshot.exists()) {
-        const data = <Data[]>snapshot.val();
-        const category = data.filter( x =>  x.Categoría == input);
-        console.log(category)
-        return category;
-    } else {
-        console.log("No data available at this location.");
+export async function filtCategory(input: string): Promise<Data[] | null> {
+    try{
+        const snapshot = await get(child(dbRef,'/'));
+        if (snapshot.exists()){
+            const data = <Data[]>snapshot.val();
+            const category = data.filter( x =>  x.Categoría == input);
+            return category;
+        } else{
+            console.log("No data available at this location.");
+            return null;
+        }
+    } catch (err){
+        console.log(err);
         return null;
     }
 }; 
 
 
 /**
- * función que recibe un parámetro de texto, realiza un fetch a un archivo json local y
- * filtra los alimentos que contienen la cadena proporcionada y devuelve un arreglo con los alimentos que tengan coincidencia
+ * Function that receives a text parameter, queries the Firebase database,
+ * filters the food items that contain the provided string, 
  * 
- * @param input cadena de texto que se utiliza para filtrar los alimentos en el archivo json,
- *              el filtro se realiza comprobando si el nombre del alimento incluye el texto proporcionado
+ * @param input Text string used to filter the food items in the database.
+ *              The filtering is done by checking if the food name includes the provided text.
  * 
- * @returns un arreglo de objetos de tipo `Data` que contienen alimentos cuyo nombre incluye el parámetro `input`
+ * @returns An array of `Data` objects containing food items whose name includes the `input` parameter.
  */
-async function filtName(input: string) {
-    const snapshot = await get(dbRef);
-    if (snapshot.exists()) {
-        const data = <Data[]>snapshot.val();
-        const category = data.filter(x => x.Alimento.includes(input));
-        console.log(category)
-        return category;
-    } else {
-        console.log("No data available at this location.");
+export async function filtName(input: string): Promise<Data[] | null>{
+    try{
+        const snapshot = await get(child(dbRef,'/'));
+        if (snapshot.exists()) {
+            const data = <Data[]>snapshot.val();
+            const name = data.filter(x => x.Alimento.includes(input));
+            return name;
+        } else{
+            console.log("No data available at this location.");
+            return null;
+        }
+    } catch (err){
+        console.log(err);
         return null;
     }
 };
-
-
-name() 
-filtCategory('Alimentos libres en energía');
-filtName('agua');
