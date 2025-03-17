@@ -100,10 +100,10 @@
 
 #results {
   flex: 1;
-  max-width: 60%;
+  width: 100%;
   padding: 20px;
-  height: calc(100vh - 150px); /* Ajusta el valor según lo que necesites */
-  overflow-y: auto; /* Barra de desplazamiento interna */
+  height: calc(100vh - 150px); 
+  overflow-y: auto; 
 }
 
 #result-item {
@@ -130,11 +130,10 @@
   color: black;
 }
 
-
 #details {
   background-color: #333;
   color: white;
-  padding: 5px;
+  padding: 10px;
   margin-left: 10px;
   border-radius: 10px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
@@ -145,8 +144,10 @@
   height: fit-content;
 }
 
-
-
+#details button{
+  cursor: pointer;
+  width: 100%;
+}
 .object-container {
   background-color: #333;
   padding: 15px;
@@ -158,22 +159,18 @@
   overflow-wrap: break-word;
 }
 
-
 .object-row {
   display: flex;
   gap: 5px;
 }
 
-
 .object-key {
   color: #00FFFF; 
 }
 
-
 .object-value {
   color: #FFA500; 
 }
-
 
 @media (max-width: 768px) {
   #buttons_options {
@@ -199,8 +196,23 @@
   #input_main button {
     width: 80%;
   }
-}
 
+  #details {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    width: fit-content;
+    max-width: 400px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    display: none; 
+  }
+}
 
 @media (max-width: 480px) {
   #buttons_options button {
