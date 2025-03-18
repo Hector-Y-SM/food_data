@@ -1,11 +1,11 @@
 import type { Data } from "../interfaces/data";
-
+const div_details = <HTMLElement>document.getElementById("details");
 /**
  * function that shows the details of the object in the div_details 
  * @param element type data, to extract all the properties of the object
  * @param div_details shows the details of the object in the div_details
  */
-export function showDetails(element: Data, div_details: HTMLElement) {
+export function showDetails(element: Data) {
     
   // dictionary with the labels and keys of the object
     const label_key = [

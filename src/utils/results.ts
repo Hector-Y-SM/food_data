@@ -1,6 +1,8 @@
 import { filtName } from "../consume";
 import type { Data } from "../interfaces/data";
 import { showDetails } from "./details";
+const div_result = <HTMLElement>document.getElementById("results");
+const div_details = <HTMLElement>document.getElementById("details");
 
 /**
  * function that generates the results of the search and displays them in the div_results
@@ -11,7 +13,8 @@ import { showDetails } from "./details";
  * @param flag we force the function to get the whole object and not just its name
  * @returns 
  */
-export function generateResults(element: Data, div_details: HTMLElement, div_result: HTMLElement, flag?: boolean) {
+
+export function generateResults(element: Data, flag?: boolean) {
     const item = document.createElement("div");
     item.id = "result-item";
     const p = document.createElement('p');
@@ -30,11 +33,11 @@ export function generateResults(element: Data, div_details: HTMLElement, div_res
       if (flag){
         filtName(element.Alimento).then((data) => {
           if (data) {
-            showDetails(data[0], div_details); 
+            showDetails(data[0]); 
           }
         });
       } else {
-        showDetails(element, div_details)
+        showDetails(element)
       }
     });
 }

@@ -17,10 +17,11 @@ function search(value: number) {
     case 1: 
         if (!div_result) return;
         div_result.innerHTML = "";
+        div_details!.style.display = "none"; 
         filtCategory(input.value).then((data) => {
           if (data) {
             data.forEach((element) => {
-              generateResults(element, div_details, div_result);
+              generateResults(element);
             });
           } else {
             const p = document.createElement('p');
@@ -32,10 +33,11 @@ function search(value: number) {
     case 2:
       if (!div_result) return;
       div_result.innerHTML = "";
+      div_details!.style.display = "none"; 
       filtName(input.value).then((data) => {
         if (data) {
           data.forEach((element) => {
-            generateResults(element, div_details, div_result);
+            generateResults(element);
           });
         } else {
           const p = document.createElement('p');
@@ -50,12 +52,14 @@ function search(value: number) {
 
 
 btn_get_all?.addEventListener('click', () => { 
+  input.placeholder = "Ingresa un alimento o una categoria";
   if (!div_result) return;
   div_result.innerHTML = "";
+  div_details!.style.display = "none"; 
   name().then((data) => {
     if (data) {
       data.forEach((element) => {
-        generateResults(element, div_details, div_result, true);
+        generateResults(element, true);
       });
     } else {
       const p = document.createElement('p');
@@ -65,6 +69,6 @@ btn_get_all?.addEventListener('click', () => {
   });
 });
 
-btn_get_category?.addEventListener('click', () =>{ value = 1; });
-btn_get_name?.addEventListener('click', () => { value = 2; });
+btn_get_category?.addEventListener('click', () =>{ input.placeholder = "ej. Frutas"; value = 1; });
+btn_get_name?.addEventListener('click', () => { input.placeholder = "ej. agua"; value = 2; });
 btn_search?.addEventListener('click', () => { search(value); });

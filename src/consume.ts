@@ -1,7 +1,7 @@
-import type { Data } from './interfaces/data';
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, get, child } from "firebase/database";
+import type { Data } from './interfaces/data';
 import { firebaseConfig } from './firebase_config.ts';
+import { getDatabase, ref, get, child } from "firebase/database";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

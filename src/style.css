@@ -13,7 +13,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-#app{
+#app {
   background-color: #242424;
   align-items: center;
   justify-content: space-between;
@@ -64,12 +64,12 @@
 
 #input_main input {
   background: none;
+  width: 30vh;
   border: none;
   border-bottom: 2px solid white;
   outline: none;
   transition: border-bottom 0.3s ease;
   font-size: 16px;
-  max-width: 300px; 
   padding: 5px;
 }
 
@@ -86,10 +86,6 @@
   background: none;
   border: none;
   padding: 5px;
-}
-
-#input_main button img {
-  filter: invert(1);
 }
 
 /* manejar el contenido del main*/
